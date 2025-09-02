@@ -1,0 +1,1 @@
+python .\eeg_slice.py >> 0822_1.log 2>&1
