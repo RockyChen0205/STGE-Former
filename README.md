@@ -20,15 +20,20 @@ As shown in the framework diagram, these components work collaboratively to extr
 
 ## Installation
 
-### Prerequisites
+### Python Environment
 - Python 3.8+
 - PyTorch 1.10+
 - CUDA 11.3+ (for GPU acceleration)
 
+### MATLAB/EEGLAB Environment (Optional)
+For EEG data preprocessing, you can use the provided MATLAB script:
+- MATLAB 2023
+- EEGLAB 2023.1
+
 ### Setup
 ```bash
-git clone [repository-url]
-cd pycharm_project_29
+git clone https://github.com/RockyChen0205/STGE-Former.git
+cd STGE-Former
 pip install -r requirements.txt
 ```
 
@@ -42,6 +47,32 @@ pip install -r requirements.txt
 ```bash
 cd preprocess
 python eeg_slice.py
+```
+
+### Lanzhou 2015 128-Channel Dataset
+For the Lanzhou University 128-channel resting-state EEG dataset:
+
+1. **Prepare data paths** in `preprocess/eeg_preprocess_batch.m`:
+   - Set `data_path` to your raw `.mat` EEG files directory
+   - Set the output `filepath` in `pop_saveset` to your desired output directory
+   - Update electrode location file path in `pop_chanedit`
+
+2. **Run MATLAB preprocessing**:
+   - Open MATLAB 2023 with EEGLAB 2023.1
+   - Run `preprocess/eeg_preprocess_batch.m`
+   - The script will:
+     - Import raw EEG data (128 channels, 256Hz)
+     - Apply 0.1-40Hz bandpass filter
+     - Perform ICA decomposition (18 components)
+     - Use ICLabel for component classification
+     - Remove artifact components (brain, muscle, eye > 90%)
+     - Apply average reference
+     - Save processed `.set` files
+
+3. **Convert to numpy** for model training:
+```bash
+cd preprocess
+python eeg_slice.py --input /path/to/processed_set_files
 ```
 
 ### Preprocessed Data
@@ -76,7 +107,7 @@ Metrics are automatically computed and saved to `results/metrics.txt`
 ## Project Structure
 
 ```
-pycharm_project_29/
+STGE-Former/
 ├── data/                 # Raw EEG data files
 ├── after_process_data/   # Processed numpy arrays
 ├── data_provider/        # Data loading utilities
@@ -86,8 +117,12 @@ pycharm_project_29/
 │   ├── embedding.py     # Feature embedding layers
 │   └── self_attention.py # Attention mechanisms
 ├── preprocess/          # Data preprocessing scripts
+│   ├── eeg_preprocess_batch.m  # MATLAB/EEGLAB batch processing
+│   ├── eeg_slice.py     # Python EEG slicing
+│   └── run.sh           # Shell script helpers
 ├── utils/               # Utility functions
 ├── results/             # Training results and metrics
-└── assets/             # Framework diagrams
+├── assets/              # Framework diagrams
+└── README.md
 ```
 
