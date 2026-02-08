@@ -1,5 +1,7 @@
 # STGE-Former: Spatial-Temporal Graph-Enhanced Transformer for EEG-Based Major Depressive Disorder Detection
 
+[![中文文档](https://img.shields.io/badge/-中文文档-blue)](README_CN.md)
+
 ![Framework Diagram](assets/framework.svg)
 
 ## Overview
@@ -55,7 +57,7 @@ For the Lanzhou University 128-channel resting-state EEG dataset:
 1. **Prepare data paths** in `preprocess/eeg_preprocess_batch.m`:
    - Set `data_path` to your raw `.mat` EEG files directory
    - Set the output `filepath` in `pop_saveset` to your desired output directory
-   - Update electrode location file path in `pop_chanedit`
+   - The electrode location file `preprocess/mychan` is included in the repository
 
 2. **Run MATLAB preprocessing**:
    - Open MATLAB 2023 with EEGLAB 2023.1
@@ -103,6 +105,21 @@ Metrics are automatically computed and saved to `results/metrics.txt`
 - Recall
 - F1-Score
 - AUC-ROC
+
+## Citation
+
+If you use this code or our paper in your research, please cite:
+
+```bibtex
+@article{chen2025stge,
+  title={STGE-Former: Spatial-Temporal Graph-Enhanced Transformer for EEG-Based Major Depressive Disorder Detection},
+  author={Chen, Yu and Yang, Chunfeng},
+  booktitle={ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  pages={1--5},
+  year={2025},
+  organization={IEEE}
+}
+```
 
 ## Project Structure
 
